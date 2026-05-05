@@ -2,7 +2,7 @@ Import-Module ActiveDirectory
 
 $results = foreach ($row in Import-Csv "emails.csv") {
 
-    $email = $row.Email
+    $email = $row.Email.Trim().ToLower()
 
     # Try exact match on mail
     $user = Get-ADUser -Filter "mail -eq '$email'" -Properties mail, proxyAddresses, userPrincipalName
