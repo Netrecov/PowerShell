@@ -34,7 +34,7 @@ $updatedPrincipals = @(
 ) | Sort-Object DistinguishedName -Unique
 
 # Display planned change
-Write-Host "Principals that will be allowed to delegate to $fileServerName:"
+Write-Host ("Principals that will be allowed to delegate to " + $fileServerName + ":")
 $updatedPrincipals | Format-Table Name,ObjectClass,DistinguishedName
 
 $confirm = Read-Host "Proceed with update? (Y/N)"
