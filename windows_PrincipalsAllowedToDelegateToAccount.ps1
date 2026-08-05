@@ -1,5 +1,7 @@
 Import-Module ActiveDirectory
 
+$ErrorActionPreference = "Stop"
+
 # Variables
 $fileServerName = "FILESERVER01"
 
@@ -31,9 +33,16 @@ $updatedPrincipals = @(
     $newPrincipals
 ) | Sort-Object DistinguishedName -Unique
 
-# Display what will be configured
+# Display planned change
 Write-Host "Principals that will be allowed to delegate to $fileServerName:"
 $updatedPrincipals | Format-Table Name,ObjectClass,DistinguishedName
+
+$confirm = Read-Host "Proceed with update? (Y/N)"
+
+if ($confirm -ne "Y") {
+    Write-Host "Cancelled"
+    exit
+}
 
 # Apply change
 Set-ADComputer $fileServerName `
